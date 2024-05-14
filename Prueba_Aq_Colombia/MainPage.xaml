@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:Prueba_Aq_Colombia.DTOs"
+             BackgroundColor="White"
+             x:Class="Prueba_Aq_Colombia.MainPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TitleStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="DarkSlateGray"/>
+                <Setter Property="Margin" Value="0,0,0,5"/>
+            </Style>
+            <Style x:Key="LabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="TextColor" Value="Gray"/>
+            </Style>
+            <Style x:Key="ButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="SkyBlue"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="Margin" Value="0,10,0,10"/>
+                <Setter Property="CornerRadius" Value="5"/>
+            </Style>
+            <Style x:Key="BorderCard" TargetType="Border">
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="VerticalOptions" Value="FillAndExpand"/>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+                <Setter Property="Stroke" Value="LightGray"/>
+                <Setter Property="StrokeThickness" Value="1"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,Auto,*"  RowSpacing="15" Margin="15">
+
+        <Button Grid.Row="0" Text="Nueva Tarea" Command="{ Binding CrearCommand}" Style="{StaticResource ButtonStyle}"/>
+
+        <Label Grid.Row="1" Text="Lista de dateas" FontSize="Subtitle" Style="{StaticResource TitleStyle}"></Label>
+
+        <ScrollView Grid.Row="2"  >
+
+            <CollectionView ItemsSource="{Binding ListaTareas}">
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="5" Orientation="Vertical"/>
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:TareaDto">
+
+                        <Border Style="{StaticResource BorderCard}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="5"/>
+                            </Border.StrokeShape>
+
+                            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" Padding="10" ColumnDefinitions="Auto,*" >
+                                <Label Grid.Row="0" Grid.Column="0" Text="Nombre:" Style="{StaticResource LabelStyle}" FontAttributes="Bold"></Label>
+                                <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Style="{StaticResource LabelStyle}" Text="{Binding Nombre}"></Label>
+
+                                <Label Grid.Row="1" Grid.Column="0" Text="Descripcion:" Style="{StaticResource LabelStyle}" FontAttributes="Bold"></Label>
+                                <Label Grid.Row="1" Grid.Column="1" HorizontalOptions="End" Style="{StaticResource LabelStyle}" Text="{Binding Descripcion}"></Label>
+
+                                <Label Grid.Row="2" Grid.Column="0" Text="Categoria:" Style="{StaticResource LabelStyle}" FontAttributes="Bold"></Label>
+                                <Label Grid.Row="2" Grid.Column="1" HorizontalOptions="End" Style="{StaticResource LabelStyle}" Text="{Binding Categoria}"></Label>
+
+                                <Label Grid.Row="3" Grid.Column="0" Text="Estado:" Style="{StaticResource LabelStyle}" FontAttributes="Bold"></Label>
+                                <Label Grid.Row="3" Grid.Column="1" HorizontalOptions="End" Style="{StaticResource LabelStyle}" Text="{Binding Estado}"></Label>
+
+                                <Label Grid.Row="4" Grid.Column="0" Padding="0,15,10,5" Style="{StaticResource LabelStyle}"  Text="Editar" TextColor="Blue" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.EditarCommand,
+                                                                        Source={x:RelativeSource AncestorType={x:Type ContentPage} }}"
+                                                              CommandParameter="{Binding}"
+                                                              />
+                                    </Label.GestureRecognizers>
+                                </Label>
+
+                                <Label Grid.Row="4" Grid.Column="1" Padding="10,15,0,5" Style="{StaticResource LabelStyle}" HorizontalOptions="End"  Text="Eliminar" TextColor="Red" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.EliminarCommand,
+                                                                        Source={x:RelativeSource AncestorType={x:Type ContentPage} }}"
+                                                              CommandParameter="{Binding}"
+                                                            />
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </Grid>
+                            
+                            
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+    </Grid>
+</ContentPage>

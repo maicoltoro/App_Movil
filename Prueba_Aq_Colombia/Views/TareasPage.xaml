@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Prueba_Aq_Colombia.Views.TareasPage"
+             BackgroundColor="White"
+             Title="{Binding Titulopagina}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="EntryStyle" TargetType="Entry">
+                <Setter Property="Margin" Value="0,0,0,10"/>
+                <Setter Property="BackgroundColor" Value="LightGray"/>
+                <Setter Property="TextColor" Value="DarkSlateGray"/>
+            </Style>
+            <Style x:Key="LabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="TextColor" Value="Black"/>
+            </Style>
+            <Style x:Key="PickerStyle" TargetType="Picker">
+                <Setter Property="TitleColor" Value="Gray"/>
+                <Setter Property="TextColor" Value="DarkSlateGray"/>
+                <Setter Property="BackgroundColor" Value="LightGray"/>
+                <Setter Property="Margin" Value="0,0,0,10"/>
+            </Style>
+            <Style x:Key="ButtonStyle" TargetType="Button">
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="BackgroundColor" Value="Green"/>
+                <Setter Property="CornerRadius" Value="5"/>
+                <Setter Property="HeightRequest" Value="50"/>
+                <Setter Property="FontSize" Value="20"/>
+            </Style>
+            <Style x:Key="ActivityIndicatorStyle" TargetType="ActivityIndicator">
+                <Setter Property="Color" Value="Blue"/>
+                <Setter Property="HeightRequest" Value="30"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+    <VerticalStackLayout  Padding="15" >
+        <ActivityIndicator IsVisible="{Binding Loading}"
+                           IsRunning="{Binding Loading}"
+                           Style="{StaticResource ActivityIndicatorStyle}"/>
+
+        <Label Text="Nombre de la tarea" Style="{StaticResource LabelStyle}"/>
+        <Entry Text="{Binding Tareadto.Nombre}" Style="{StaticResource EntryStyle}"/>
+
+        <Label Text="Descripcion" Style="{StaticResource LabelStyle}"/>
+        <Entry Text="{Binding Tareadto.Descripcion}" Style="{StaticResource EntryStyle}"/>
+
+        <Label Text="Estado" Style="{StaticResource LabelStyle}"/>
+        <Picker x:Name="estadoSelecter"
+                SelectedItem="{Binding Tareadto.Estado}"
+                Title="Selecciona un estado"
+                Style="{StaticResource PickerStyle}">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Pendiente</x:String>
+                    <x:String>Completada</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+
+        <Label Text="Categoría" Style="{StaticResource LabelStyle}"/>
+        <Picker ItemsSource="{Binding Opciones}"
+                SelectedItem="{Binding Tareadto.Categoria}"
+                Title="Selecciona una opción"
+                Style="{StaticResource PickerStyle}"/>
+
+        <Button Text="Guardar" Command="{Binding GuardarCommand}" Style="{StaticResource ButtonStyle}"/>
+    </VerticalStackLayout>
+</ContentPage>
